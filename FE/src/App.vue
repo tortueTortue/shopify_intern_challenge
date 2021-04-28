@@ -1,56 +1,18 @@
 <template>
   <div id="app">
-        <b-navbar class="navbar">
-        <template #brand>
-            <b-navbar-item tag="router-link" :to="{ path: '/' }">
-                <img
-                    src="./assets/shopictures_logo.png"
-                    alt="Shopictures official logo"
-                    class="logo"
-                >
-            </b-navbar-item>
-        </template>
-        <template #start>
-            <b-navbar-item href="#" class="shopicolor-nav">
-                Home
-            </b-navbar-item>
-            <b-navbar-item href="#" class="shopicolor-nav">
-                Documentation
-            </b-navbar-item>
-            <b-navbar-dropdown label="Info">
-                <b-navbar-item href="#" class="shopicolor-nav">
-                    About
-                </b-navbar-item>
-                <b-navbar-item href="#" class="shopicolor-nav">
-                    Contact
-                </b-navbar-item>
-            </b-navbar-dropdown>
-        </template>
-
-        <template #end>
-            <b-navbar-item tag="div">
-                <div class="buttons">
-                    <a class="button shopicolor">
-                        <strong>Search</strong>
-                    </a>
-                    <a class="button shopicolor-bside text-white">
-                        Upload
-                    </a>
-                </div>
-            </b-navbar-item>
-        </template>
-    </b-navbar>
-    <WelcomePage msg="Lecture de topic de la STM"/>
+    <Navbar/>
+    <router-view></router-view>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import WelcomePage from './components/WelcomePage.vue';
+import { Component, Vue } from "vue-property-decorator";
+import WelcomePage from "./views/WelcomePage.vue";
+import Navbar from './components/navbar.vue'
 
 @Component({
   components: {
-    WelcomePage,
+    Navbar
   },
 })
 export default class App extends Vue {}
@@ -69,11 +31,11 @@ export default class App extends Vue {}
   height: 70px;
 }
 .logo {
-  height: 40px!important;
+  height: 40px !important;
   width: auto;
 }
 .navbar-item img {
-    max-height: 2.5rem!important;    
+  max-height: 2.5rem !important;
 }
 .shopicolor {
   background-color: #95bf46 !important;
