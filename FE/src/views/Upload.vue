@@ -19,7 +19,7 @@
         type="is-success"
         label="Price"
       >
-        <b-input name="price" placeholder="How much for this picture?" expanded></b-input>
+        <b-input type="number" name="price" placeholder="How much for this picture?" expanded></b-input>
       </b-field>
 
       <b-field horizontal class="file is-success" :class="{ 'has-name': !!file }">
@@ -37,7 +37,7 @@
       <b-field horizontal
         ><!-- Label left empty for spacing -->
         <p class="control">
-          <b-button label="Submit" type="is-success" />
+          <b-button @click="uploadImage" label="Submit" type="is-success" />
         </p>
       </b-field>
     </section>
@@ -49,10 +49,36 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import axios from "axios";
 
 @Component
-export default class UploadImage extends Vue {}
+export default class UploadImage extends Vue {
+
+  private file: any;
+  private name: string;
+  private price: number;
+
+  public uploadImage() {
+    axios
+      .post("http://127.0.0.1:8000/add_image", {
+        name: this.name,
+        price: this.price,
+        owner: 'browser_user',
+        photo: this.file
+      },
+      {
+        headers: {
+          // "Content-Type": "multipart/form-data",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods":
+            "POST, GET, PUT, OPTIONS, DELETE",
+          "Access-Control-Allow-Headers":
+            "Access-Control-Allow-Methods, Access-Control-Allow-Origin, Origin, Accept, Content-Type",
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
+      })
+  }
+}
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .large-size-input {
   width: 360px !important;
