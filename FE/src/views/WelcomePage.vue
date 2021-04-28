@@ -2,7 +2,7 @@
   <div class="hello">
     <!--Welcome page header-->
     <!--TODO Add style and computed property Search throughout our (amount of pictures -1)+ library of images-->
-    <h1> Search throughout our (amount of pictures -1)+ library of images</h1>
+    <h1 class="title"> Search throughout our (amount of pictures -1)+ library of images</h1>
     <!--Search bar -->
     <!--Carousel of actual images-->
 
