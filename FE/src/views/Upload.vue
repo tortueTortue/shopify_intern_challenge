@@ -11,7 +11,7 @@
         label="Name"
         type="is-success"
       >
-        <b-input name="imgname" placeholder="What's this picture called?" expanded></b-input>
+        <b-input v-model="imgname" name="imgname" placeholder="What's this picture called?" expanded></b-input>
       </b-field>
 
       <b-field
@@ -19,7 +19,7 @@
         type="is-success"
         label="Price"
       >
-        <b-input type="number" name="price" placeholder="How much for this picture?" expanded></b-input>
+        <b-input v-model="price" type="number" name="price" placeholder="How much for this picture?" expanded></b-input>
       </b-field>
 
       <b-field horizontal class="file is-success" :class="{ 'has-name': !!file }">
@@ -51,30 +51,30 @@ import axios from "axios";
 @Component
 export default class UploadImage extends Vue {
 
-  private file: any;
-  private name: string;
-  private price: number;
+  private file: any = null;
+  private imgname: string = "";
+  private price: number = 0;
 
   public uploadImage() {
     axios
-      .post("http://127.0.0.1:8000/add_image", {
-        name: this.name,
-        price: this.price,
-        owner: 'browser_user',
-        photo: this.file
-      },
-      {
+      .post("http://127.0.0.1:8000/add_image", this.file, { 
+        params : {
+          name: this.imgname,
+          price: this.price,
+          owner: 'browser_user'
+        },
         headers: {
-          // "Content-Type": "multipart/form-data",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods":
-            "POST, GET, PUT, OPTIONS, DELETE",
-          "Access-Control-Allow-Headers":
-            "Access-Control-Allow-Methods, Access-Control-Allow-Origin, Origin, Accept, Content-Type",
-          "Content-Type": "application/json",
-          "Accept": "application/json"
+          'accept': 'application/json',
+          'Accept-Language': 'en-US,en;q=0.8',
+          'Content-Type': `multipart/form-data; boundary=${this.file._boundary}`,
         }
       })
+      .catch(function(error) {
+        console.log(error);
+      })
+      .then(function() {
+        // always executed
+      });
   }
 }
 </script>

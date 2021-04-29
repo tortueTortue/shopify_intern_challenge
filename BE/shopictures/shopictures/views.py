@@ -1,25 +1,28 @@
 from django.http import HttpResponse, HttpResponseServerError
 from django.views.decorators.csrf import ensure_csrf_cookie
+import PIL
+from io import BytesIO
 from .models import Image
+from django.core.files.base import ContentFile
+from django.core.files.uploadedfile import InMemoryUploadedFile
 import json
 
 @ensure_csrf_cookie
 def add_image(request):
     if request.method == "POST":
-        print(f"file : {request.body}")
-        img = json.loads(request.body)
 
+        # img = request.body
+        # stream = BytesIO(request.body)
+        # buffer = BytesIO()
+        # img = PIL.Image.open(stream)
+        # img.save(fp=buffer, format='JPEG')
+        img = ContentFile(BytesIO(request.body).getvalue())
+        name = request.GET.get('name')
         img_file = Image.objects.create(
-                        name = img['name'],
-                        owner = img['owner'],
-                        price = img['price'],
-                        photo = img['photo']
+                        name = name,
+                        owner = request.GET.get('owner'),
+                        price = int(request.GET.get('price')),
+                        photo = InMemoryUploadedFile(img, name, name + ".jpg", 'image/jpeg', img.tell, None)
                     )
-
-        # img_file.photo = "images_repository" + str(img_file.id) + img['name'] + ".jpg"
-
-        #TODO test png
-
-        # img_file.save()
 
         return HttpResponse("Image successfully uploaded!")
