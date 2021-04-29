@@ -21,4 +21,5 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('add_image', csrf_exempt(views.add_image), name='add_image'),
+    path('get_pictures', csrf_exempt(views.get_pictures), name='get_pictures'),
 ]

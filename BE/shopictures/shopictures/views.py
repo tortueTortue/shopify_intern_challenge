@@ -11,11 +11,6 @@ import json
 def add_image(request):
     if request.method == "POST":
 
-        # img = request.body
-        # stream = BytesIO(request.body)
-        # buffer = BytesIO()
-        # img = PIL.Image.open(stream)
-        # img.save(fp=buffer, format='JPEG')
         img = ContentFile(BytesIO(request.body).getvalue())
         name = request.GET.get('name')
         img_file = Image.objects.create(
@@ -26,3 +21,9 @@ def add_image(request):
                     )
 
         return HttpResponse("Image successfully uploaded!")
+
+# @ensure_csrf_cookie
+def get_pictures(request):
+    if request.method == "GET":
+
+        return Image.objects.all()#.order_by('-id')#[:int(request.GET.get('amount'))]

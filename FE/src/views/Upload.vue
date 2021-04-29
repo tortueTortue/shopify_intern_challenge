@@ -70,11 +70,25 @@ export default class UploadImage extends Vue {
         }
       })
       .catch(function(error) {
+        this.$buefy.toast.open({
+                    duration: 5000,
+                    message: `There was an error with the reques <b>` + error + `</b>`,
+                    position: 'is-bottom',
+                    type: 'is-danger'
+                })
         console.log(error);
       })
       .then(function() {
         // always executed
       });
+
+      this.$buefy.toast.open({
+          message: 'Image uploaded succesfully!',
+          type: 'is-success'
+      })
+      this.imgname = "";
+      this.price = 0;
+      this.file = null;
   }
 }
 </script>
