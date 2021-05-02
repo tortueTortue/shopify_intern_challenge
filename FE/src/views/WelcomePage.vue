@@ -2,6 +2,7 @@
   <div class="hello">
     <!--Welcome page header-->
     <!--TODO Add style and computed property Search throughout our (amount of pictures -1)+ library of images-->
+    <div class="columns"><div class="column space"></div></div>
     <h1 class="title">Search throughout our library of images</h1>
     <!--Search bar -->
     <!--Carousel of actual images-->
@@ -41,20 +42,15 @@
 
     <div id="image-grid">
       <div class="columns" v-for="img in searchedImages" :key="img.name">
-          <b-image
-            class="column is-half"
-            :src="img.url"
-            ratio="2by1"
-        ></b-image>
+        <b-image class="column is-half" :src="img.url" ratio="2by1"></b-image>
         <b-field class="column is-one-quarter" label="Name">
-            <b-input disabled v-model="img.name"></b-input>
+          <b-input disabled v-model="img.name"></b-input>
         </b-field>
         <b-field class="column is-one-quarter" label="Price">
-            <b-input disabled type="number" v-model="img.price"></b-input>
+          <b-input disabled type="number" v-model="img.price"></b-input>
         </b-field>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -98,7 +94,7 @@ export default class WelcomePage extends Vue {
       label: "price",
       width: "40",
       numeric: false,
-    }
+    },
   ];
 
   private img_locations: Array<string> = null;
@@ -135,16 +131,16 @@ export default class WelcomePage extends Vue {
           this.keySearched
       )
       .then((response) => {
-        this.searchedImages = response.data.map(img => 
-                                              { 
-                                                const curr_img:object = {};
-                                                
-                                                curr_img.name = img.fields.name;
-                                                curr_img.price = img.fields.price;
-                                                curr_img.url = require("../../../BE/shopictures/media/" + img.fields.photo);
+        this.searchedImages = response.data.map((img) => {
+          const curr_img: object = {};
 
-                                                return curr_img;
-                                              });
+          curr_img.name = img.fields.name;
+          curr_img.price = img.fields.price;
+          curr_img.url = require("../../../BE/shopictures/media/" +
+            img.fields.photo);
+
+          return curr_img;
+        });
         console.log(this.searchedImages);
       });
     this.keySearched = "";
@@ -189,6 +185,10 @@ a {
 }
 
 .carousel-img-height {
-  max-height: 850px!important;
+  max-height: 850px !important;
+}
+.space {
+  margin-top: 20px;
+  margin-bottom: 0px;
 }
 </style>
