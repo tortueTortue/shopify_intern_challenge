@@ -2,10 +2,18 @@
   <div class="hello">
     <!--Welcome page header-->
     <!--TODO Add style and computed property Search throughout our (amount of pictures -1)+ library of images-->
-    <h1 class="title"> Search throughout our (amount of pictures -1)+ library of images</h1>
+    <h1 class="title">
+      Search throughout our (amount of pictures -1)+ library of images
+    </h1>
     <!--Search bar -->
     <!--Carousel of actual images-->
-
+<div class="columns">
+    <div class="column is-one-quarter">
+  </div>
+    <b-input class="column search-bar centered" placeholder="Search for a image"></b-input>
+        <div class="column is-one-quarter">
+  </div>
+</div>
     <b-carousel
       v-model="carousel"
       :animated="animated"
@@ -19,13 +27,14 @@
       @change="info($event)"
     >
       <b-carousel-item v-for="(carousel, i) in carousels" :key="i">
-        <section :class="`hero is-medium is-${carousel.color} is-bold`">
-          <div class="hero-body has-text-centered">
-            <h1 class="title">{{ carousel.title }}</h1>
-            <b-input :placeholder="carousel.title"></b-input>
-            <p>A link that <a href="#arrow">goes to arrow</a></p>
-          </div>
-        </section>
+        <!-- <section :class="``"> -->
+          <b-image
+            class="hero is-medium is-bold image hero-body has-text-centered"
+            :src="getImgUrl(i)"
+          >
+
+          </b-image>
+        <!-- </section> -->
       </b-carousel-item>
     </b-carousel>
   </div>
@@ -39,173 +48,39 @@ import axios from "axios";
 export default class WelcomePage extends Vue {
   @Prop() private msg!: string;
 
-
   private carousel: number = 0;
-  private animated: string = 'fade';
+  private animated: string = "fade";
   private drag: boolean = false;
   private autoPlay: boolean = false;
   private pauseHover: boolean = false;
   private pauseInfo: boolean = false;
   private repeat: boolean = false;
-  private pauseType: string = 'is-primary';
+  private pauseType: string = "is-primary";
   private interval: number = 3000;
   private carousels: Array<object> = [
-      { title: 'Slide 1', color: 'dark' },
-      { title: 'Slide 2', color: 'primary' },
-      { title: 'Slide 3', color: 'info' },
-      { title: 'Slide 4', color: 'success' },
-      { title: 'Slide 5', color: 'warning' },
-      { title: 'Slide 6', color: 'danger' }
+    { title: "Slide 1", color: "dark" },
+    { title: "Slide 2", color: "primary" },
+    { title: "Slide 3", color: "info" },
+    { title: "Slide 4", color: "success" },
+    { title: "Slide 5", color: "warning" },
+    { title: "Slide 6", color: "danger" },
   ];
 
+  private img_locations: Array<string> = null;
 
-  private columns: Array<object> = [
-    {
-      field: "CreateUtc",
-      label: "Creation date",
-      numeric: true,
-    },
-    {
-      field: "Desc",
-      label: "Topic name",
-    },
-    {
-      field: "ExpiryUtc",
-      label: "Expiration date",
-    },
-    {
-      field: "Status",
-      label: "Status",
-      centered: true,
-    },
-    {
-      field: "Unit",
-      label: "Unit",
-    },
-  ];
+  mounted() {
+    axios.get("http://127.0.0.1:8000/get_pictures?amount=6")
+      .then(response => {
+        console.log("Data" + response.data)
+        this.img_locations = response.data.map(img => img.fields.photo);
+        
+        console.log(this.img_locations)
+      });
+  }
 
-  // public sendFile() {
-  //   console.log("path : ", this.filePath);
-  //   axios
-  //     .post("http://127.0.0.1:8000/mtl_client/compute_stats_file", {
-  //       fileName: this.filePath,
-  //     })
-  //     .then(function (response) {
-  //       // handle success
-  //       console.log(response);
-  //     })
-  //     .catch(function (error) {
-  //       // handle error
-  //       console.log(error);
-  //     })
-  //     .then(function () {
-  //       // always executed
-  //     });
-  // }
-
-  // public uploadFile() {
-  //   let buefy = this.$buefy;
-  //   console.log("path : ", this.filePath);
-  //   axios
-  //     .post(
-  //       "http://127.0.0.1:8000/mtl_client/compute_stats_file_upload",
-  //       this.file,
-  //       {
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       }
-  //     )
-  //     .then(function (response) {
-  //       // handle success
-  //       console.log(response);
-  //       buefy.dialog.alert(
-  //         "Voici les statistiques de votre fichier : " + response.data
-  //       );
-  //     })
-  //     .catch(function (error) {
-  //       // handle error
-  //       console.log(error);
-  //     })
-  //     .then(function () {
-  //       // always executed
-  //     });
-  // }
-
-  // public start_mtl_client() {
-  //   console.log("On instancie un nouveau client.");
-  //   axios
-  //     .get("http://127.0.0.1:8000/mtl_client/")
-  //     .then(function (response) {
-  //       // handle success
-  //       console.log(response);
-  //     })
-  //     .catch(function (error) {
-  //       // handle error
-  //       console.log(error);
-  //     })
-  //     .then(function () {
-  //       // always executed
-  //     });
-  // }
-
-  // public compute_stats() {
-  //   console.log("On calcul des stats!");
-
-  //   const xhr = new XMLHttpRequest();
-
-  //   xhr.onload = () => {
-  //     // process response
-  //     if (xhr.status === 200) {
-  //       // parse JSON data
-  //       this.$buefy.dialog.alert("Le calcul de stats a commencé!");
-  //       console.log(JSON.parse(xhr.response));
-  //     } else {
-  //       console.error("Error!");
-  //       this.$buefy.dialog.alert({
-  //         title: "Error",
-  //         message:
-  //           "Something's went wrong in the server <b>icon</b> and <b>type</b>",
-  //         type: "is-danger",
-  //         hasIcon: true,
-  //         icon: "times-circle",
-  //         iconPack: "fa",
-  //         ariaRole: "alertdialog",
-  //         ariaModal: true,
-  //       });
-  //     }
-  //   };
-
-  //   // create a `GET` request
-  //   xhr.open("POST", "http://127.0.0.1:8000/mtl_client/compute_stats");
-
-  //   let selectTopics: Array<any> = [];
-  //   this.selectedOptions.forEach((topic) => selectTopics.push(topic.path));
-
-  //   // send request
-  //   xhr.send(
-  //     JSON.stringify({
-  //       topics: selectTopics,
-  //       agregators: this.selectedStatistics,
-  //     })
-  //   );
-  // }
-
-  // public get_latest_message() {
-  //   console.log("On demande pour le message le plus recent.");
-  //   this.$store.commit("setLatestTopicMessage");
-  // }
-
-  // public listen_topic(topicName: string) {
-  //   console.log("On ecoute nouveau topic ", topicName);
-  //   this.$store.commit("startNewTopic", topicName);
-  // }
-
-  // public get getTopicData(): Array<object> {
-  //   return [this.$store.state.latestTopicMessage];
-  // }
-
-
+  public getImgUrl(value) {
+    return `https://picsum.photos/id/43${value}/1230/500`;
+  }
 }
 </script>
 
@@ -227,5 +102,17 @@ li {
 }
 a {
   color: #42b983;
+}
+.search-bar {
+  z-index: 500!important;
+}
+
+.hello {
+  background-color: rgb(248, 248, 248)!important;
+  height: calc(100vh - 70px)!important;
+}
+
+.carousel .carousel-indicator .indicator-item .indicator-style a{
+  background-color: #5e8e3e!important;
 }
 </style>

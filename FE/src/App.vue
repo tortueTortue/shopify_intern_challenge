@@ -26,6 +26,7 @@ export default class App extends Vue {}
   text-align: center;
   color: #2c3e50;
   margin-top: 0px;
+  height: 100vh!important;
 }
 .navbar {
   height: 70px;
