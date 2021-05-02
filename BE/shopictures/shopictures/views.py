@@ -26,8 +26,15 @@ def add_image(request):
 # @ensure_csrf_cookie
 def get_pictures(request):
     if request.method == "GET":
+        img_locations = Image.objects.all().order_by('-id')[:int(request.GET.get('amount'))]
+        img_locations_json = serializers.serialize('json', img_locations)
+
+        return HttpResponse(img_locations_json, content_type ="application/json")
+
+def get_pictures_with_keyword(request):
+    if request.method == "GET":
         # choose random pics
-        img_locations = Image.objects.all().order_by('-id')[:int(request.GET.get('amount'))]#.values('photo')
+        img_locations = Image.objects.all().filter(name__contains=str(request.GET.get('keyword')))
         img_locations_json = serializers.serialize('json', img_locations)
 
         return HttpResponse(img_locations_json, content_type ="application/json")

@@ -50,4 +50,8 @@ export default class App extends Vue {}
 .text-white {
   color: #ffffff !important;
 }
+
+.display-none {
+  display: none!important;
+}
 </style>

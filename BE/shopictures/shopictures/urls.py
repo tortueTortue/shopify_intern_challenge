@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('add_image', csrf_exempt(views.add_image), name='add_image'),
     path('get_pictures', csrf_exempt(views.get_pictures), name='get_pictures'),
+    path('get_pictures_with_keyword', csrf_exempt(views.get_pictures_with_keyword), name='get_pictures_with_keyword'),
 ]
