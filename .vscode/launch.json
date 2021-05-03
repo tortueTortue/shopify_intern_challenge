@@ -10,9 +10,9 @@
             "request": "launch",
             "program": "${workspaceFolder}\\BE\\shopictures\\manage.py",
             "args": [
-                // "runserver"
-                "test",
-                "shopictures"
+                "runserver"
+                // "test",
+                // "shopictures"
                 // "makemigrations"
                 // "migrate"
             ],
