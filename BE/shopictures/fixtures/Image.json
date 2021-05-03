@@ -1,0 +1,62 @@
+[
+    {
+      "model": "shopictures.image",
+      "pk": 1,
+      "fields": {
+        "name": "Grass and mountains",
+        "owner": "browser_user",
+        "price": 10000,
+        "photo": "images_repository/Grass_and_mountains.jpg"
+      }
+    },
+    {
+      "model": "shopictures.image",
+      "pk": 2,
+      "fields": {
+        "name": "more Grass and mountains",
+        "owner": "browser_user",
+        "price": 20000,
+        "photo": "images_repository/more_Grass_and_mountains.jpg"
+      }
+    },
+    {
+      "model": "shopictures.image",
+      "pk": 3,
+      "fields": {
+        "name": "Grass and mountains again",
+        "owner": "browser_user",
+        "price": 500,
+        "photo": "images_repository/Grass_and_mountains_again.jpg"
+      }
+    },
+    {
+      "model": "shopictures.image",
+      "pk": 4,
+      "fields": {
+        "name": "Grass and mountains one more gain",
+        "owner": "browser_user",
+        "price": 8000,
+        "photo": "images_repository/Grass_and_mountains_one_more_gain.jpg"
+      }
+    },
+    {
+      "model": "shopictures.image",
+      "pk": 5,
+      "fields": {
+        "name": "lac",
+        "owner": "browser_user",
+        "price": 9000,
+        "photo": "images_repository/lac.jpg"
+      }
+    },
+    {
+      "model": "shopictures.image",
+      "pk": 6,
+      "fields": {
+        "name": "lac 2",
+        "owner": "browser_user",
+        "price": 10000,
+        "photo": "images_repository/lac_kdp00Lz.jpg"
+      }
+    }
+  ]

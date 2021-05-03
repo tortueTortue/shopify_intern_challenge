@@ -29,6 +29,7 @@ To start the application, you need to start the backend and the frontend servers
 ```
 python BE/shopictures/manage.py makemigrations shopictures
 python BE/shopictures/manage.py migrate
+python BE/shopictures/manage.py loaddata Image
 python BE/shopictures/manage.py runserver
 ```
 
