@@ -60,3 +60,9 @@ There are two features to the Shopictures app:
 2. Select the <em>Search for a image</em> field.
 3. Enter a keyword.
 4. Press the <b>Enter</b> key.
+
+
+## Running the test cases
+```
+python BE/shopictures/manage.py test
+```

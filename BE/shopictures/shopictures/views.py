@@ -13,11 +13,16 @@ def add_image(request):
     if request.method == "POST":
 
         img = ContentFile(BytesIO(request.body).getvalue())
-        name = request.GET.get('name')
+        req = request.GET
+        name = req.get('name')
+        if not name:
+            name = request.POST.get('name')
+            req = request.POST
+
         img_file = Image.objects.create(
                         name = name,
-                        owner = request.GET.get('owner'),
-                        price = int(request.GET.get('price')),
+                        owner = req.get('owner'),
+                        price = int(req.get('price')),
                         photo = InMemoryUploadedFile(img, name, name + ".jpg", 'image/jpeg', img.tell, None)
                     )
 
