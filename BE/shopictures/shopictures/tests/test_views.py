@@ -29,7 +29,7 @@ class ViewTestCase(TestCase):
                     )
 
     def tearDown(self):
-        pass
+        Image.objects.all().delete()
 
     def test_add_image(self):
         test_img3= {'fields' : {'name': 'test_img_3', 'owner': 'tortue_tester', 'price': '8000', 'photo' : r"BE/shopictures/media/images_repository/ski.jpg"}}
